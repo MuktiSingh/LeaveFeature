@@ -1,0 +1,20 @@
+{
+  "name": "leave",
+  "version": "1.0.0",
+  "description": "A sample Node.js project",
+  "main": "leaveBackend.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon node leaveBackend.js"
+  },
+  "author": "Your Name",
+  "license": "ISC",
+  "dependencies": {
+    "@azure/msal-node": "^2.1.0",
+    "axios": "^1.5.1",
+    "express": "^4.18.2",
+    "mssql": "^9.2.0",
+    "mysql": "^2.18.1",
+    "nodemon": "^3.0.1"
+  }
+}
