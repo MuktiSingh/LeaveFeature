@@ -6,11 +6,19 @@ app.use(express.json())
 const mysql = require('mysql');
 
 // Configuration object for the database connection
+// const config = {
+//   host: '40.80.90.204',
+//   user: 'root',
+//   password: 'auriga@123',
+//   database: 'dribble',
+// };
+
 const config = {
-  host: '40.80.90.204',
+  host: '127.0.0.1',
   user: 'root',
-  password: 'auriga@123',
-  database: 'dribble',
+  password: '123456789',
+  database: 'machaxi',
+  port: 3306
 };
 function getPlayerTermById(id){
   console.log(id);
