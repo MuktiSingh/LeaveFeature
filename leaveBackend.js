@@ -12,6 +12,7 @@ const config = {
   password: 'auriga@123',
   database: 'dribble',
 };
+console.log("I am here", port);
 
 // const config = {
 //   host: '127.0.0.1',
