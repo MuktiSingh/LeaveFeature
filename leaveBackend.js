@@ -557,7 +557,7 @@ async function leave_request(req) {
   }
   const updateLeaveTable2 = (id, date_to, date_from) => {
     return new Promise((resolve, reject) => {
-      connection.query(`INSERT INTO leave_record (player_id, batch_id, date_to, date_from, applied_on, reasonForLeave, missed_session) VALUES (?, ?, ?, ?, ?, ?, ?)`, [id, batch_id2, date_to, date_from, formattedDate, reasonForLeave, dayCounts], (error, results, fields) => {
+      connection.query(`INSERT INTO leave_record (player_id, batch_id, date_to, date_from, applied_on, reasonForLeave, missed_session) VALUES (?, ?, ?, ?, ?, ?, ?)`, [id, batch_id2, date_to, date_from, formattedDate, reasonForLeave, daysCount], (error, results, fields) => {
         if (error) {
           console.error(`An Error occured while recording leave dates`, error);
           reject(`error while recording leave days`);
