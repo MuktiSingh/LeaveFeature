@@ -12,15 +12,6 @@ const config = {
   password: 'auriga@123',
   database: 'dribble',
 };
-console.log("I am here", port);
-
-// const config = {
-//   host: '127.0.0.1',
-//   user: 'root',
-//   password: '123456789',
-//   database: 'machaxi',
-//   port: 3306
-// };
 function getPlayerTermById(id){
   console.log(id);
   return new Promise((resolve, reject) => {
@@ -566,7 +557,7 @@ async function leave_request(req) {
   }
   const updateLeaveTable2 = (id, date_to, date_from) => {
     return new Promise((resolve, reject) => {
-      connection.query(`INSERT INTO leave_record (player_id, batch_id, date_to, date_from, applied_on, reasonForLeave) VALUES (?, ?, ?, ?, ?, ?)`, [id, batch_id2, date_to, date_from, formattedDate, reasonForLeave], (error, results, fields) => {
+      connection.query(`INSERT INTO leave_record (player_id, batch_id, date_to, date_from, applied_on, reasonForLeave, missed_session) VALUES (?, ?, ?, ?, ?, ?, ?)`, [id, batch_id2, date_to, date_from, formattedDate, reasonForLeave, dayCounts], (error, results, fields) => {
         if (error) {
           console.error(`An Error occured while recording leave dates`, error);
           reject(`error while recording leave days`);
@@ -842,5 +833,5 @@ connection.connect((err) => {
 
 
 app.listen(port, () => {
-  console.log('Server is running on port ',port);
+  console.log('Server is running on port', port);
 })
