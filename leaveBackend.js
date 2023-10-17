@@ -59,6 +59,35 @@ function updatePauseRecord(id, dummyStartDate, dummyEndDate,formattedDate, reaso
     })
   })
 }
+// Step 1: Fetch the original date from the database
+function updateCourtSubscription(id, days) {
+  const selectQuery = "SELECT expiry_date FROM court_subscription WHERE user_id = ? AND is_active = 1;";
+  connection.query(selectQuery, [id], (selectErr, selectResults) => {
+      if (selectErr) {
+          console.error('Error fetching data from the database:', selectErr);
+          connection.end();
+          return;
+      }
+      const originalDate = selectResults[0].expiry_date;
+      console.log('Original Date from the Database:', originalDate);
+      // Step 2: Modify the date (add 3 days, for example)
+      const daysToAdd = days;
+      const modifiedDate = new Date(originalDate);
+      modifiedDate.setDate(modifiedDate.getDate() + daysToAdd);
+      console.log('Modified Date:', modifiedDate);
+       // Step 3: Update the database with the modified date
+      const updateQuery = "UPDATE court_subscription SET expiry_date = ? WHERE user_id = ? AND is_active = 1;";
+
+      connection.query(updateQuery, [modifiedDate, id], (updateErr, updateResults) => {
+          if (updateErr) {
+              console.error('Error updating data in the database:', updateErr);
+          } else {
+              console.log('Date updated in the database.');
+          }
+      });
+  });
+}
+
 function existingPlayerToBeUpdatedCreditCheck(id) {
   console.log(6);
   return new Promise((resolve, reject) => {
@@ -236,6 +265,7 @@ async function leave_request_plan2(req) {
         console.log(10,results);
           newPlayerToBeInserted(id, _days, formattedDate,dummyStartDate, dummyEndDate).then((sample) => {
           updatePauseRecord(id, dummyStartDate, dummyEndDate,formattedDate, reasonForLeave, _days);
+          updateCourtSubscription(id, _days);
         console.log(11,sample);
           })
             .catch((error) => {
@@ -248,6 +278,7 @@ async function leave_request_plan2(req) {
             console.log(444, __credit, " ", credit);
             if (__credit < credit) {
               updatePauseRecord(id, dummyStartDate, dummyEndDate,formattedDate, reasonForLeave, _days).then((sample) => {
+                updateCourtSubscription(id, _days);
               })
                 .catch((error) => {
                   console.error('Error:', error);
